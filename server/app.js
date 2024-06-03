@@ -12,6 +12,7 @@ app.use(
       "http://127.0.0.1:8000",
       "https://ayush1108g.github.io",
       "https://cp29bd07-3000.inc1.devtunnels.ms",
+      "https://blog-web-gules.vercel.app",
       process.env.FRONTEND_URL,
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
