@@ -5,8 +5,23 @@ import Pagination from '@/components/Pagination';
 import {API} from '@/utils/api';
 import {useAlert} from '@/context/AlertContext';
 
+interface Blog {
+  _id: string;
+  title: string;
+  data: string;
+  date: string;
+  userId: {
+    name: string;
+    email: string;
+    photo: string;
+    _id: string;
+  };
+  coverImage: string;
+}
+
+
 const BlogPage: React.FC = () => {
-  const [blogs, setBlogs] = useState([]); 
+  const [blogs, setBlogs] = useState<Blog[]>([]); 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const AlertCtx = useAlert();
   const postsPerPage = 10;

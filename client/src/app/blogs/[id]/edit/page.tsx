@@ -8,6 +8,19 @@ import MySunEditor from '@/components/Editor';
 import "suneditor/dist/css/suneditor.min.css";
 
 
+interface Blog {
+  id: number;
+  title: string;
+  data: string;
+  date: string;
+  userId: {
+    name: string;
+    email: string;
+    photo: string;
+    _id: string;
+  };
+  coverImage: string;
+}
 const BlogEditPage: React.FC = () => {
     const pathname = usePathname();
     const router = useRouter();

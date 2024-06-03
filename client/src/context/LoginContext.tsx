@@ -8,6 +8,7 @@ interface User {
     phone: number;
     password: string;
     photo: string;
+    _id: string;
 }
 
 interface LoginContextType {

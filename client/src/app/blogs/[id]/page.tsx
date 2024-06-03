@@ -8,7 +8,7 @@ import {API } from '@/utils/api';
 import Image from 'next/image';
 import "suneditor/dist/css/suneditor.min.css";
 
-function extractDateTimeFromTimestamp(timestamp) {
+function extractDateTimeFromTimestamp(timestamp:string) {
   // Convert timestamp to milliseconds (if not already in milliseconds)
   if (timestamp.toString().length < 13) {
       timestamp *= 1000;
@@ -34,7 +34,7 @@ function extractDateTimeFromTimestamp(timestamp) {
   };
 }
 interface Blog {
-  id: number;
+  _id: string;
   title: string;
   data: string;
   date: string;
@@ -47,6 +47,20 @@ interface Blog {
   coverImage: string;
 }
 
+interface Comment {
+  userId: {
+      name: string;
+      photo: string;
+      _id: string;
+      email: string;
+  }
+  date: string;
+  comment: string;
+  blogId: string;
+  _id: string;
+  like: [string];
+  dislike: [string];
+}
 const Page = () => {
   const pathname = usePathname();
   const router = useRouter();
@@ -95,7 +109,7 @@ const Page = () => {
           }
           console.log(comments);
           const comm = comments.data.comments;
-          comm.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+          comm.sort((a:Comment, b:Comment) => new Date(b.date).getTime() - new Date(a.date).getTime());
           setComments(comments.data.comments);
       }catch(err){
          console.log(err);
