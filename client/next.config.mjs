@@ -5,6 +5,9 @@ const nextConfig = {
       { hostname: "picsum.photos" },
       { hostname: "cdn.example" },
       { hostname: "drive.google.com" },
+      { hostname: "lh3.googleusercontent.com" },
+      { hostname: "blog-web-4yaz.onrender.com" },
+      { hostname: "blog-web-4yaz.onrender.com/api/fileupload" },
     ],
   },
   async headers() {
@@ -32,7 +35,7 @@ const nextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: "https://cp29bd07-8000.inc1.devtunnels.ms/api/:path*",
+        destination: "https://blog-web-4yaz.onrender.com/api/:path*",
       },
     ];
   },
