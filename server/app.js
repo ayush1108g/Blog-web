@@ -24,7 +24,6 @@ app.use((req, res, next) => {
   console.log("CORS", req.headers.origin);
   res.header("Access-Control-Allow-Origin", [req.headers.origin]);
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
   next();
 });
 app.use(express.json());
