@@ -33,13 +33,12 @@ const page = () => {
             return;
         }
         try {
-            const response = API.post('/api/v1/contactus',data);
-            console.log(response);
+            API.post('/api/v1/contactus',data);
             AlertCtx.showAlert('success','Message sent successfully');
             setData({email:'',subject:'',message:''});
             router.push('/');
 
-        } catch (error) {
+        } catch (error:any) {
             AlertCtx.showAlert('error', error?.response?.data?.message ?  error?.response?.data?.message :'Something went wrong ');
         }
     };

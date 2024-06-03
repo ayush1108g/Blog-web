@@ -3,9 +3,21 @@ import React, { useState,useEffect } from 'react';
 import ContactUs from "@/components/ContactUs";
 import BlogCard from '@/components/BlogCard';
 import {API} from '@/utils/api';
-
+interface Blog {
+  _id: string;
+  title: string;
+  data: string;
+  date: string;
+  userId: {
+    name: string;
+    email: string;
+    photo: string;
+    _id: string;
+  };
+  coverImage: string;
+}
 export default function Home() {
-  const [blogs, setBlogs] = useState([]); 
+  const [blogs, setBlogs] = useState<Blog[]>([]); 
 
   useEffect(() => {
     fetchblogs();
@@ -16,7 +28,7 @@ export default function Home() {
       const response = await API.get('/api/v1/blogs');
       console.log(response);
       setBlogs(response.data.blogs);
-    } catch (error) {
+    } catch (error:any) {
       console.error('Error fetching blogs: ', error);
     }
   };

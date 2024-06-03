@@ -23,12 +23,10 @@ const NewsletterSignup: React.FC = () => {
         }
         try {
             const response = await API.post('/api/v1/contactus/newsletter',{email});
-            console.log(response);
             AlertCtx.showAlert('success','Subscribed successfully');
             setEmail('');
             router.push('/');
-
-        } catch (error) {
+        } catch (error:any) {
             console.log(error);
             AlertCtx.showAlert('error', error?.response?.data?.message ?  error?.response?.data?.message :'Something went wrong ');
         }

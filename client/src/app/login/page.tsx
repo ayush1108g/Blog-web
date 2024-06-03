@@ -33,12 +33,12 @@ const SignInForm: React.FC = () => {
           return;
       }
       try {
-          const response =await API.post('/api/v1/auth/login',data);
+          const response :any=await API.post('/api/v1/auth/login',data);
           console.log(response);
           AlertCtx.showAlert('success','User logged in successfully');
           LoginCtx.login(response.data.data.user, true);
           router.push('/');
-      } catch (error) {
+      } catch (error:any) {
         AlertCtx.showAlert('error', error?.response?.data?.message ?  error?.response?.data?.message :'Something went wrong ');
       }
   }

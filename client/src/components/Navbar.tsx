@@ -5,16 +5,22 @@ import { FaBars, FaTimes, FaSearch } from "react-icons/fa";
 import { IoCloseSharp } from "react-icons/io5";
 import Image from 'next/image';
 import { useLogin } from "@/context/LoginContext";
+
+interface NavbarLink {
+    id: number;
+    link: string;
+    title: string;
+}
 const Navbar = () => {
     const [nav, setNav] = useState(false);
     const [searchVisible, setSearchVisible] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
     const LoginCtx = useLogin();
 
-    let links = [
+    let links:NavbarLink[] = [
         { id: 1, link: "/blogs", title: 'Blogs' },
         { id: 2, link:  LoginCtx.isLoggedIn ? "/blogs/create": "/login", title: 'Write a Blog' },
-        LoginCtx.isLoggedIn ? null : { id: 3, link: "/login", title: 'Login/Signup' },
+        ...(LoginCtx.isLoggedIn ? [] : [{ id: 3, link: "/login", title: 'Login/Signup' }]), // Spread the array if user is not logged in
         { id: 5, link: "/contactus", title: 'Contact us' },
     ];
     links = links.filter((link) => link !== null)
@@ -63,7 +69,7 @@ const Navbar = () => {
                     <>
                     <div className="ml-4 pr-2">
                         <Image
-                            src={LoginCtx.user.photo ||  "https://picsum.photos/200/200"}
+                            src={LoginCtx?.user?.photo ||  "https://picsum.photos/200/200"}
                             alt="Profile Picture"
                             width={30}
                             height={30}

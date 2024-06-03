@@ -43,12 +43,12 @@ const SignInForm: React.FC = () => {
         }
         console.log(data);
         try {
-            const response =await API.post('/api/v1/auth/signup',data);
+            const response:any =await API.post('/api/v1/auth/signup',data);
             console.log(response);
             AlertCtx.showAlert('success','User registered successfully');
             LoginCtx.login(response.data.data.user, true);
             router.push('/');
-        } catch (error) {
+        } catch (error:any) {
             AlertCtx.showAlert('error', error?.response?.data?.message ?  error?.response?.data?.message :'Something went wrong ');
         }
     }
@@ -72,14 +72,14 @@ const SignInForm: React.FC = () => {
       console.log(formData);
       setFileuploading(true);
       try {
-          const res = await API.post(`/api/v1/fileupload`, formData, { headers: { "Content-Type": "multipart/form-data", }, });
+          const res:any = await API.post(`/api/v1/fileupload`, formData, { headers: { "Content-Type": "multipart/form-data", }, });
           console.log(res);
           const id = res.data.data.id;
           const url = `https://drive.google.com/thumbnail?id=${id}`;
           console.log(url);
           setProfileUrl(url);
           AlertCtx.showAlert('success', 'File uploaded successfully');
-      } catch (err) {
+      } catch (err:any) {
           console.log(err);
           if (err.response?.data?.message) {
               AlertCtx.showAlert('error', err.response.data.message);
@@ -108,7 +108,7 @@ const SignInForm: React.FC = () => {
               </div>
               <div>
                 <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Phone Number</label>
-                <input type="number" name="phone" id="phone" value={data.phone} onChange={handleChange} className=" border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="XXX-XXX-XXXX" required />
+                <input type="number" name="phone" id="phone" value={data.phone ||""} onChange={handleChange} className=" border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="XXX-XXX-XXXX" required />
               </div>
               <div>
                 <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Password</label>
@@ -124,7 +124,7 @@ const SignInForm: React.FC = () => {
                       accept="image/*"
                       className="flex-grow border border-gray-400 rounded px-4 py-2"
                       id="inputGroupFile02"
-                      onChange={(e) => setProfile(e.target.files[0])}
+                      onChange={(e) => setProfile(e.target.files? e.target.files[0] : null)}
                     />
                     <span
                       className="ml-2 px-4 py-2 bg-gray-200 border border-gray-400 rounded cursor-pointer flex items-center justify-center"
