@@ -35,7 +35,7 @@ exports.uploadAssignmentFile = async (req, res) => {
     });
   };
   console.log("dirname ", __dirname);
-  const KEYFILEPATH = path.join(__dirname, "../utils/my-blog-app-gdrive.json");
+  const KEYFILEPATH = path.join(__dirname, "../my-blog-app-gdrive.json");
   const SCOPES = ["https://www.googleapis.com/auth/drive"];
 
   const auth = new google.auth.GoogleAuth({
