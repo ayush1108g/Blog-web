@@ -1,9 +1,6 @@
 import { Button, Card, Input, Row } from "antd";
 import React, { useRef, useState, useEffect } from "react";
-import dynamic from "next/dynamic";
-const SunEditor = dynamic(() => import("suneditor-react"), {
-  ssr: false,
-});
+import SunEditor from "suneditor-react";
 import {font, video,table,list,image,formatBlock,fontSize,fontColor,hiliteColor,align,lineHeight,horizontalRule,template,link} from 'suneditor/src/plugins'
 
 import { API } from "@/utils/api";
