@@ -22,14 +22,14 @@ interface Comment {
 }
 
 interface Props {
-    blogId: string;
+    blogId: string|undefined;
     comments: Comment[];
     setComments: React.Dispatch<React.SetStateAction<Comment[]>>;
 }
 
 const DiscussionSection: React.FC<Props> = ({ blogId, comments, setComments }) => {
     const [showDropdown, setShowDropdown] = useState<string>("");
-    const dropdownRef = useRef(null);
+    const dropdownRef = useRef<any>(null);
     const [ipComment, setIpComment] = useState<string>("");
     const LoginCtx = useLogin();
     const AlertCtx = useAlert();
@@ -56,12 +56,12 @@ const DiscussionSection: React.FC<Props> = ({ blogId, comments, setComments }) =
             return AlertCtx.showAlert('error', 'Please login to comment');
         }
         try {
-            const response = await API.post('/api/v1/comments/' + blogId, { comment: ipComment, blogId, userId: LoginCtx.user._id });
+            const response = await API.post('/api/v1/comments/' + blogId, { comment: ipComment, blogId, userId: LoginCtx?.user?._id });
             const newComment = response.data.comment;
             setComments(prevComments => [newComment, ...prevComments]);
             setIpComment("");
             setCurrentPage(1); // Reset to the first page when a new comment is added
-        } catch (error) {
+        } catch (error:any) {
             console.log(error);
             AlertCtx.showAlert('error', error?.response?.data?.message ? error?.response?.data?.message : 'Something went wrong');
         }
@@ -72,7 +72,7 @@ const DiscussionSection: React.FC<Props> = ({ blogId, comments, setComments }) =
             await API.delete('/api/v1/comments/update/' + showDropdown);
             setComments(prevComments => prevComments.filter(comment => comment._id !== showDropdown));
             setShowDropdown("");
-        } catch (error) {
+        } catch (error:any) {
             console.log(error);
             AlertCtx.showAlert('error', error?.response?.data?.message ? error?.response?.data?.message : 'Something went wrong');
         }
@@ -84,7 +84,7 @@ const DiscussionSection: React.FC<Props> = ({ blogId, comments, setComments }) =
             const resp = await API.patch(`/api/v1/comments/update/${commentId}`, { type: action, userId: LoginCtx.user?._id });
             const updatedComment = resp.data.comment;
             setComments(prevComments => prevComments.map(comment => comment._id === commentId ? updatedComment : comment));
-        } catch (error) {
+        } catch (error:any) {
             console.log(error);
             AlertCtx.showAlert('error', error?.response?.data?.message ? error?.response?.data?.message : 'Something went wrong');
         }
@@ -149,10 +149,10 @@ const DiscussionSection: React.FC<Props> = ({ blogId, comments, setComments }) =
                         <p className="text-gray-500">{comment.comment}</p>
                         <div className="flex items-center space-x-4 mt-2">
                             <button onClick={() => likeDislikeHandler(comment._id, "like")} className="flex items-center text-gray-600 hover:text-blue-600">
-                                <FaThumbsUp className="mr-1" color={comment.like.includes(LoginCtx?.user?._id) ? 'blue' : ''} /> {comment.like.length}
+                                <FaThumbsUp className="mr-1" color={comment.like.includes(LoginCtx?.user?._id|| "") ? 'blue' : ''} /> {comment.like.length}
                             </button>
                             <button onClick={() => likeDislikeHandler(comment._id, "dislike")} className="flex items-center text-gray-600 hover:text-red-600">
-                                <FaThumbsDown className="mr-1" color={comment.dislike.includes(LoginCtx?.user?._id) ? 'blue' : ''} /> {comment.dislike.length}
+                                <FaThumbsDown className="mr-1" color={comment.dislike.includes(LoginCtx?.user?._id|| "") ? 'blue' : ''} /> {comment.dislike.length}
                             </button>
                         </div>
                     </article>

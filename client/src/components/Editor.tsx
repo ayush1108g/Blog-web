@@ -10,7 +10,7 @@ import { API } from "@/utils/api";
 import "suneditor/dist/css/suneditor.min.css";
 
 const MySunEditor = ({
-  onChange,
+  onChange = (content:any) => {},
   initialTemplateName = "",
   initialContent = "",
   initialTempVar = [],
@@ -19,7 +19,7 @@ const MySunEditor = ({
   const [tempVar, setTempVar] = useState(initialTempVar);
   const editor = useRef();
 
-  const uploadHandlerServer = async (file) => {
+  const uploadHandlerServer = async (file:any) => {
     const formData = new FormData();
     formData.append("file", file);
 
@@ -36,11 +36,11 @@ const MySunEditor = ({
     }
   };
 
-  const getSunEditorInstance = (sunEditor) => {
+  const getSunEditorInstance = (sunEditor:any) => {
     editor.current = sunEditor;
   };
 
-  const handleImageUploadBefore = (files, info, uploadHandler) => {
+  const handleImageUploadBefore = (files:any, info:any, uploadHandler:any) => {
     const uploadImage = async () => {
       const url = await uploadHandlerServer(files[0]);
       if (url) {

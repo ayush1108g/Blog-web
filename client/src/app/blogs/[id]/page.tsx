@@ -8,7 +8,7 @@ import {API } from '@/utils/api';
 import Image from 'next/image';
 import "suneditor/dist/css/suneditor.min.css";
 
-function extractDateTimeFromTimestamp(timestamp:string) {
+function extractDateTimeFromTimestamp(timestamp:number) {
   // Convert timestamp to milliseconds (if not already in milliseconds)
   if (timestamp.toString().length < 13) {
       timestamp *= 1000;
@@ -95,7 +95,7 @@ const Page = () => {
       }
       // selectedBlog.data = replaceImagesWithDivs(selectedBlog.data);
       setBlog(selectedBlog);
-    } catch (err) {
+    } catch (err:any) {
       setError(err.message);
     } finally {
       setLoading(false);
@@ -160,7 +160,7 @@ const Page = () => {
         <p className="absolute top-12 right-10 mt-4 mr-4  text-black py-2 px-4 rounded hover:bg-pink-200"        >
           {blog ?'~ '+ blog.userId.name : ''}
         <p className="absolute top-18 mr-4 text-black py-2 px-4 rounded hover:bg-pink-200"        >
-          {blog ? extractDateTimeFromTimestamp(blog.date).date : ''}
+          {blog ? extractDateTimeFromTimestamp(parseInt(blog.date)).date : ''}
         </p>
         </p>
         {blog?.coverImage && (

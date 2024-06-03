@@ -10,7 +10,7 @@ import Image from 'next/image';
 
 const CreateBlog = () => {
     const [title,setTitle] = useState<string>('');
-    const [data,setData] = useState<string>();
+    const [data,setData] = useState<any>();
     const AlertCtx = useAlert();
     const LoginCtx = useLogin();
     const router = useRouter();
@@ -47,7 +47,7 @@ const CreateBlog = () => {
             setProfileUrl(url);
             AlertCtx.showAlert('success', 'File uploaded successfully');
             return url;
-        } catch (err) {
+        } catch (err:any) {
             console.log(err);
             if (err.response?.data?.message) {
                 AlertCtx.showAlert('error', err.response.data.message);
@@ -58,7 +58,7 @@ const CreateBlog = () => {
         }
     }
 
-    const changeHandler = (content) => {
+    const changeHandler = (content:any) => {
         setData(content);
     };
 
@@ -77,16 +77,16 @@ const CreateBlog = () => {
         }
     
         try {
-          let coverImageUrl:string|null = profileUrl;
+          let coverImageUrl:string|null|void = profileUrl;
     
           if (!coverImageUrl && profile) {
             coverImageUrl = await uploadHandler();
           }
     
-          const response = await API.post('/api/v1/blogs/addblog', {
+          const response:any = await API.post('/api/v1/blogs/addblog', {
             title,
             data,
-            userId: LoginCtx.user._id,
+            userId: LoginCtx?.user?._id,
             coverImage: coverImageUrl,
           });
     
@@ -94,7 +94,7 @@ const CreateBlog = () => {
           AlertCtx.showAlert('success', 'Blog published successfully');
           console.log(response.data.blog._id);
           router.push('/blogs/' + response.data.blog._id);
-        } catch (error) {
+        } catch (error:any) {
           console.log(error);
           AlertCtx.showAlert('error', error?.response?.data?.message ? error?.response?.data?.message : 'Something went wrong');
         }
@@ -136,7 +136,7 @@ const CreateBlog = () => {
                       accept="image/*"
                       className="flex-grow border border-gray-400 rounded px-4 py-2"
                       id="inputGroupFile02"
-                      onChange={(e) => setProfile(e.target.files[0])}
+                      onChange={(e) => setProfile(e.target.files? e.target.files[0] : null)}
                     />
                     <span
                       className="ml-2 px-4 py-2 bg-gray-200 border border-gray-400 rounded cursor-pointer flex items-center justify-center"

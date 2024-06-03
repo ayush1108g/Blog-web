@@ -27,7 +27,7 @@ const BlogEditPage: React.FC = () => {
     const id = pathname.split('/')[2];
     const [blog, setBlog] = useState<Blog | null>(null);
     const [title, setTitle] = useState<string>('');
-    const [data, setData] = useState<string>();
+    const [data, setData] = useState<any>();
     const [profile, setProfile] = useState<File | null>(null);
     const [profileUrl, setProfileUrl] = useState<string | null>(null);
     const [fileuploading, setFileuploading] = useState<boolean>(false);
@@ -56,7 +56,7 @@ console.log(id);
           setData(selectedBlog.data);
         setTitle(selectedBlog.title);
         setProfileUrl(selectedBlog.coverImage);
-        } catch (err) {
+        } catch (err:any) {
             console.error(err);
         } finally {
           setLoading(false);
@@ -66,7 +66,7 @@ console.log(id);
         return <div>Loading...</div>;
       }
 
-    const changeHandler = (content) => {
+    const changeHandler = (content:any) => {
         setData(content);
     }
 
@@ -97,7 +97,7 @@ console.log(id);
             setProfileUrl(url);
             AlertCtx.showAlert('success', 'File uploaded successfully');
             return url;
-        } catch (err) {
+        } catch (err:any) {
             console.log(err);
             if (err.response?.data?.message) {
                 AlertCtx.showAlert('error', err.response.data.message);
@@ -123,13 +123,13 @@ console.log(id);
         }
     
         try {
-          let coverImageUrl:string|null = profileUrl;
+          let coverImageUrl:string|null|void = profileUrl;
     
           if (!coverImageUrl && profile) {
             coverImageUrl = await uploadHandler();
           }
     
-          const response = await API.patch('/api/v1/blogs/blog/'+id, {
+          const response:any = await API.patch('/api/v1/blogs/blog/'+id, {
             id: id,
             title,
             data,
@@ -140,7 +140,7 @@ console.log(id);
           AlertCtx.showAlert('success', 'Blog published successfully');
           console.log(response.data.blog._id);
           router.push('/blogs/' + response.data.blog._id);
-        } catch (error) {
+        } catch (error:any) {
           console.log(error);
           AlertCtx.showAlert('error', error?.response?.data?.message ? error?.response?.data?.message : 'Something went wrong');
         }
@@ -180,7 +180,7 @@ console.log(id);
                       accept="image/*"
                       className="flex-grow border border-gray-400 rounded px-4 py-2"
                       id="inputGroupFile02"
-                      onChange={(e) => setProfile(e.target.files[0])}
+                      onChange={(e) => setProfile(e.target.files ? e.target.files[0] : null)}
                     />
                     <span
                       className="ml-2 px-4 py-2 bg-gray-200 border border-gray-400 rounded cursor-pointer flex items-center justify-center"
@@ -202,7 +202,7 @@ console.log(id);
                 </div>
             )}
             <h1 className='pb-5'>Write your blog</h1>
-            <MySunEditor initialContent={data}  onChange={changeHandler} />
+            <MySunEditor initialContent={data}  onChange={(content:any)=>changeHandler(content)} />
 
             <button type="button" className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2" onClick={publishBlogHandler}>Publish Blog</button>
         {/* </div> */}
