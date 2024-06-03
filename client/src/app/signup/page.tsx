@@ -43,7 +43,11 @@ const SignInForm: React.FC = () => {
         }
         console.log(data);
         try {
-            const response:any =await API.post('/api/v1/auth/signup',data);
+            const response:any =await API.post('/api/v1/auth/signup',data,{
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            });
             console.log(response);
             AlertCtx.showAlert('success','User registered successfully');
             LoginCtx.login(response.data.data.user, true);

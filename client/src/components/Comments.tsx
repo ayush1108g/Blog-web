@@ -56,7 +56,11 @@ const DiscussionSection: React.FC<Props> = ({ blogId, comments, setComments }) =
             return AlertCtx.showAlert('error', 'Please login to comment');
         }
         try {
-            const response = await API.post('/api/v1/comments/' + blogId, { comment: ipComment, blogId, userId: LoginCtx?.user?._id });
+            const response = await API.post('/api/v1/comments/' + blogId, { comment: ipComment, blogId, userId: LoginCtx?.user?._id },{
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
             const newComment = response.data.comment;
             setComments(prevComments => [newComment, ...prevComments]);
             setIpComment("");
@@ -69,7 +73,11 @@ const DiscussionSection: React.FC<Props> = ({ blogId, comments, setComments }) =
 
     const deleteHandler = async () => {
         try {
-            await API.delete('/api/v1/comments/update/' + showDropdown);
+            await API.delete('/api/v1/comments/update/' + showDropdown,{
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
             setComments(prevComments => prevComments.filter(comment => comment._id !== showDropdown));
             setShowDropdown("");
         } catch (error:any) {
@@ -81,7 +89,11 @@ const DiscussionSection: React.FC<Props> = ({ blogId, comments, setComments }) =
     const likeDislikeHandler = async (commentId: string, action: string) => {
         if(!LoginCtx.isLoggedIn) return AlertCtx.showAlert('error', 'Please login to like/dislike');
         try {
-            const resp = await API.patch(`/api/v1/comments/update/${commentId}`, { type: action, userId: LoginCtx.user?._id });
+            const resp = await API.patch(`/api/v1/comments/update/${commentId}`, { type: action, userId: LoginCtx.user?._id },{
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
             const updatedComment = resp.data.comment;
             setComments(prevComments => prevComments.map(comment => comment._id === commentId ? updatedComment : comment));
         } catch (error:any) {

@@ -33,7 +33,11 @@ const page = () => {
             return;
         }
         try {
-            API.post('/api/v1/contactus',data);
+            API.post('/api/v1/contactus',data,{
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
             AlertCtx.showAlert('success','Message sent successfully');
             setData({email:'',subject:'',message:''});
             router.push('/');

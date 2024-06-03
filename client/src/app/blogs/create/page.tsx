@@ -88,6 +88,10 @@ const CreateBlog = () => {
             data,
             userId: LoginCtx?.user?._id,
             coverImage: coverImageUrl,
+          },{
+            headers: {
+              "Content-Type": "application/json",
+            },
           });
     
           console.log(response);

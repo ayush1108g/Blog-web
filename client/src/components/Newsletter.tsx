@@ -22,7 +22,11 @@ const NewsletterSignup: React.FC = () => {
             return;
         }
         try {
-            const response = await API.post('/api/v1/contactus/newsletter',{email});
+            const response = await API.post('/api/v1/contactus/newsletter',{email},{
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            });
             AlertCtx.showAlert('success','Subscribed successfully');
             setEmail('');
             router.push('/');

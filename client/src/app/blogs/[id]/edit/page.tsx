@@ -134,6 +134,11 @@ console.log(id);
             title,
             data,
             coverImage: coverImageUrl,
+          },{
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          
           });
     
           console.log(response);

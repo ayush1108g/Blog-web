@@ -33,7 +33,11 @@ const SignInForm: React.FC = () => {
           return;
       }
       try {
-          const response :any=await API.post('/api/v1/auth/login',data);
+          const response :any=await API.post('/api/v1/auth/login',data,{
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
           console.log(response);
           AlertCtx.showAlert('success','User logged in successfully');
           LoginCtx.login(response.data.data.user, true);
