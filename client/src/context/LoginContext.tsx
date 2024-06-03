@@ -14,7 +14,7 @@ interface User {
 interface LoginContextType {
   user: User | null;
   isLoggedIn: boolean;
-  login: (user: User) => void;
+  login: (user: User,remember:boolean) => void;
   logout: () => void;
 }
 interface LoginProviderProps {
